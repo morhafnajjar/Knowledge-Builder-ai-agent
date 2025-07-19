@@ -1,0 +1,272 @@
+{
+  "ohms law": {
+    "sessions": [
+      {
+        "feedback": [
+          {
+            "id": "1",
+            "concept": "Voltage",
+            "explanation": "Voltage, also known as electrical potential difference, is the electric potential energy per unit charge, measured in volts (V). It's the 'push' that drives current through a circuit.",
+            "example": "A battery has a voltage of 12V. This means that for every coulomb of charge that flows through the battery, 12 joules of energy are provided.",
+            "question": "What unit is voltage measured in?",
+            "options": [
+              "A) Amperes",
+              "B) Volts",
+              "C) Ohms"
+            ],
+            "correct_answer": "B",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "2",
+            "concept": "Current",
+            "explanation": "Current is the rate of flow of electric charge through a circuit, measured in amperes (A). It's the 'amount' of electricity flowing.",
+            "example": "If 6 Coulombs of charge pass a point in a circuit in 2 seconds, the current is 6 C / 2 s = 3 A.",
+            "question": "Which of the following describes the current in a circuit?",
+            "options": [
+              "A) The opposition to the flow of charge.",
+              "B) The rate of flow of charge.",
+              "C) The potential difference between two points."
+            ],
+            "correct_answer": "B",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "3",
+            "concept": "Resistance",
+            "explanation": "Resistance is the opposition to the flow of electric current in a circuit, measured in ohms (Ω). It restricts the current flow.",
+            "example": "A resistor has a resistance of 100 Ω. This means it opposes the flow of current with a resistance of 100 ohms.",
+            "question": "What unit is resistance measured in?",
+            "options": [
+              "A) Volts",
+              "B) Amperes",
+              "C) Ohms"
+            ],
+            "correct_answer": "C",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "4",
+            "concept": "Ohm's Law Equation",
+            "explanation": "Ohm's Law states the relationship between voltage (V), current (I), and resistance (R): Voltage = Current x Resistance, or V = IR.",
+            "example": "If a circuit has a voltage of 6V and a resistance of 2Ω, the current is calculated as: I = V/R = 6V / 2Ω = 3A.",
+            "question": "Which equation correctly expresses Ohm's Law?",
+            "options": [
+              "A) V = I/R",
+              "B) V = IR",
+              "C) I = VR"
+            ],
+            "correct_answer": "B",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "5",
+            "concept": "Applying Ohm's Law to Solve for Voltage",
+            "explanation": "Using Ohm's Law (V = IR), we can calculate the voltage in a circuit if we know the current and resistance.",
+            "example": "A circuit has a current of 2A and a resistance of 5Ω.  The voltage is V = IR = 2A * 5Ω = 10V.",
+            "question": "A circuit has a current of 3A and a resistance of 4Ω. What is the voltage?",
+            "options": [
+              "A) 12V",
+              "B) 0.75V",
+              "C) 7V"
+            ],
+            "correct_answer": "A",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "6",
+            "concept": "Applying Ohm's Law to Solve for Current",
+            "explanation": "Using Ohm's Law (I = V/R), we can calculate the current in a circuit if we know the voltage and resistance.",
+            "example": "A circuit has a voltage of 9V and a resistance of 3Ω.  The current is I = V/R = 9V / 3Ω = 3A.",
+            "question": "A circuit has a voltage of 12V and a resistance of 6Ω. What is the current?",
+            "options": [
+              "A) 2A",
+              "B) 72A",
+              "C) 0.5A"
+            ],
+            "correct_answer": "A",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "7",
+            "concept": "Applying Ohm's Law to Solve for Resistance",
+            "explanation": "Using Ohm's Law (R = V/I), we can calculate the resistance in a circuit if we know the voltage and current.",
+            "example": "A circuit has a voltage of 15V and a current of 5A.  The resistance is R = V/I = 15V / 5A = 3Ω.",
+            "question": "A circuit has a voltage of 24V and a current of 4A. What is the resistance?",
+            "options": [
+              "A) 96Ω",
+              "B) 6Ω",
+              "C) 20Ω"
+            ],
+            "correct_answer": "B",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "8",
+            "concept": "Ohm's Law in Series Circuits",
+            "explanation": "In a series circuit, the current is the same through all components, and the total resistance is the sum of individual resistances.  The total voltage is also the sum of voltage drops across each resistor.",
+            "example": "Two resistors, 2Ω and 3Ω, are in series with a 10V source. The total resistance is 5Ω. The current is I=10V/5Ω = 2A. The voltage drop across the 2Ω resistor is V = 2A * 2Ω = 4V, and across the 3Ω resistor it is V = 2A * 3Ω = 6V (4V + 6V = 10V).",
+            "question": "In a series circuit, what is true about the current?",
+            "options": [
+              "A) It is different at each component.",
+              "B) It is the same at each component.",
+              "C) It is divided among the components."
+            ],
+            "correct_answer": "B",
+            "subtopics": [],
+            "feedback": "understood"
+          },
+          {
+            "id": "9",
+            "concept": "Ohm's Law in Parallel Circuits",
+            "explanation": "In a parallel circuit, the voltage is the same across all components, and the total current is the sum of the currents through each component.  The total resistance is calculated differently using the reciprocal formula.",
+            "example": "Two resistors, 4Ω and 4Ω, are in parallel with a 12V source.  The voltage across each resistor is 12V. The current through each resistor is I = 12V/4Ω = 3A. The total current is 3A + 3A = 6A.",
+            "question": "In a parallel circuit, what is true about the voltage?",
+            "options": [
+              "A) It is different at each component.",
+              "B) It is the same at each component.",
+              "C) It is divided among the components."
+            ],
+            "correct_answer": "B",
+            "subtopics": [
+              {
+                "id": "91",
+                "concept": "Parallel Circuit Basics",
+                "explanation": "A parallel circuit provides multiple paths for current to flow. Components are connected side-by-side, meaning they all experience the same voltage.",
+                "example": "Three resistors (2Ω, 4Ω, and 6Ω) are connected in parallel to a 12V source. What is the voltage across the 4Ω resistor? Solution: Since it's a parallel circuit, the voltage across each resistor is the same as the source voltage, which is 12V.",
+                "question": "In a parallel circuit, what is the same across all components?",
+                "options": {
+                  "A": "Current",
+                  "B": "Voltage",
+                  "C": "Resistance"
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "92",
+                "concept": "Total Resistance in Parallel",
+                "explanation": "The total resistance in a parallel circuit is *always* less than the smallest individual resistance. It's calculated using the reciprocal formula: 1/R_total = 1/R1 + 1/R2 + 1/R3 + ...",
+                "example": "Two resistors (R1 = 10Ω, R2 = 20Ω) are connected in parallel. Calculate the total resistance. Solution: 1/R_total = 1/10 + 1/20 = 3/20. Therefore, R_total = 20/3 ≈ 6.67Ω",
+                "question": "Which of the following statements about the total resistance in a parallel circuit is true?",
+                "options": {
+                  "A": "It's always greater than the largest resistor.",
+                  "B": "It's always less than the smallest resistor.",
+                  "C": "It's the sum of all the resistors."
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "93",
+                "concept": "Calculating Total Current",
+                "explanation": "The total current flowing into a parallel circuit is the sum of the currents flowing through each branch (resistor). Use Ohm's Law (I = V/R) to find each branch current, then add them up.",
+                "example": "A 12V source is connected to two parallel resistors (4Ω and 6Ω). Calculate the total current. Solution: I1 = 12V/4Ω = 3A; I2 = 12V/6Ω = 2A; I_total = 3A + 2A = 5A.",
+                "question": "The total current in a parallel circuit is equal to the...",
+                "options": {
+                  "A": "Product of the branch currents.",
+                  "B": "Sum of the branch currents.",
+                  "C": "Average of the branch currents."
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "94",
+                "concept": "Current Division Rule (Two Resistors)",
+                "explanation": "When only two resistors are in parallel, a shortcut to finding the current through each is: I1 = I_total * (R2 / (R1 + R2)) and I2 = I_total * (R1 / (R1 + R2)).",
+                "example": "A total current of 5A flows into two parallel resistors: 2Ω and 3Ω.  Calculate the current through the 2Ω resistor using current division. Solution: I_2Ω = 5A * (3Ω / (2Ω + 3Ω)) = 5A * (3/5) = 3A.",
+                "question": "Which resistor gets the larger share of the total current in a two-resistor parallel circuit?",
+                "options": {
+                  "A": "The larger resistor",
+                  "B": "The smaller resistor",
+                  "C": "They both get the same amount"
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "95",
+                "concept": "Voltage Drop Across Each Branch",
+                "explanation": "In a parallel circuit, the voltage drop across each branch is equal to the voltage source.  This is a key characteristic of parallel circuits.",
+                "example": "A 9V battery is connected to three resistors in parallel. What is the voltage drop across each resistor? Solution: The voltage drop across each resistor is 9V.",
+                "question": "What is the voltage drop across a 10Ω resistor connected in parallel with a 5Ω resistor across a 6V source?",
+                "options": {
+                  "A": "3V",
+                  "B": "6V",
+                  "C": "12V"
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "96",
+                "concept": "Power in Parallel Circuits",
+                "explanation": "The total power dissipated in a parallel circuit is the sum of the power dissipated by each resistor. Use P = V^2/R or P = I^2 * R to calculate power in each branch, then add them.",
+                "example": "A 12V source is connected to two parallel resistors: 4Ω and 6Ω. Calculate the total power dissipated. Solution: P1 = 12^2/4 = 36W; P2 = 12^2/6 = 24W; P_total = 36W + 24W = 60W.",
+                "question": "How do you determine the total power dissipated in a parallel circuit?",
+                "options": {
+                  "A": "Multiply the power dissipated by each component.",
+                  "B": "Add the power dissipated by each component.",
+                  "C": "Divide the power dissipated by each component."
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "97",
+                "concept": "Effect of Adding More Resistors",
+                "explanation": "Adding more resistors in parallel *decreases* the total resistance of the circuit and *increases* the total current drawn from the source.",
+                "example": "A 10V source is initially connected to a 20Ω resistor. The total current is 0.5A. If a 10Ω resistor is added in parallel, what will happen to the total current? Solution: The total resistance will decrease (less than 10Ω), so the total current will increase (greater than 0.5A).",
+                "question": "Adding more resistors in parallel to a circuit will...",
+                "options": {
+                  "A": "Increase total resistance and decrease total current.",
+                  "B": "Decrease total resistance and increase total current.",
+                  "C": "Increase both total resistance and total current."
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "98",
+                "concept": "Open Circuit in a Branch",
+                "explanation": "If one branch in a parallel circuit becomes an open circuit (e.g., a blown bulb), current stops flowing through that branch, but the voltage across all other branches remains the same, and the circuit continues to function, albeit with a reduced total current.",
+                "example": "Three light bulbs are connected in parallel to a 12V source. If one bulb burns out (open circuit), what happens to the other bulbs? Solution: The other bulbs will continue to shine normally because the voltage remains at 12V.",
+                "question": "If one branch in a parallel circuit becomes open, what happens to the other branches?",
+                "options": {
+                  "A": "They stop working completely.",
+                  "B": "They continue to work normally.",
+                  "C": "Their voltage decreases."
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              },
+              {
+                "id": "99",
+                "concept": "Short Circuit in a Branch",
+                "explanation": "If one branch in a parallel circuit becomes a short circuit (zero resistance), a very large current will flow through that branch, potentially damaging the power supply or other components due to overheating or tripping a circuit breaker. The voltage across the entire parallel circuit will drop to near zero.",
+                "example": "A 12V source is connected to three resistors in parallel. One resistor is replaced with a wire (short circuit). What is the likely outcome? Solution: A large current will flow through the wire, potentially causing the power supply to fail or a circuit breaker to trip.",
+                "question": "What is the potential danger of a short circuit in a parallel branch?",
+                "options": {
+                  "A": "It will increase the total resistance of the circuit.",
+                  "B": "It can cause a large current to flow, potentially causing damage.",
+                  "C": "It will decrease the total current of the circuit."
+                },
+                "correct_answer": "B",
+                "subtopics": []
+              }
+            ],
+            "feedback": "not understood"
+          }
+        ]
+      }
+    ]
+  }
+}

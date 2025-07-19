@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge Builder</title>
+    <style>
+        body { 
+            font-family: "Segoe UI", "Roboto", sans-serif; 
+            background: linear-gradient(135deg, #f0f4f8 0%, #e3f2fd 100%);
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .container { 
+            max-width: 100vw; 
+            margin: 40px auto; 
+            background: #fff;
+            padding: 32px 24px; 
+            border-radius: 20px; 
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            justify-content: flex-start;
+        }
+        h2 { 
+            text-align: center; 
+            margin-bottom: 32px; 
+            color: #1976d2;
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+        label { 
+            display: block; 
+            margin-bottom: 8px; 
+            font-weight: 600;
+            color: #555;
+        }
+        select, input[type="text"] { 
+            width: 100%; 
+            padding: 12px 16px; 
+            margin-bottom: 20px; 
+            border: 2px solid #e0e0e0; 
+            border-radius: 12px; 
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #1976d2;
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+        button { 
+            width: 100%; 
+            padding: 14px 24px; 
+            background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%);
+            color: #fff; 
+            border: none; 
+            border-radius: 12px; 
+            font-size: 1.1rem; 
+            font-weight: 600;
+            cursor: pointer; 
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+        }
+        button:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        }
+        .ideas-list {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            gap: 24px;
+        }
+        .idea-card {
+            width: 95vw;
+            max-width: 1200px;
+            background: #fff;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .idea-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+        .idea-header {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .idea-header h3 {
+            color: #1976d2;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        .idea-content-row {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        .idea-card.understood {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%) !important;
+            border: 2px solid #4caf50;
+        }
+        .idea-card.not-understood {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%) !important;
+            border: 2px solid #f44336;
+        }
+        .feedback-radio-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            margin-right: 24px;
+            margin-top: 8px;
+            gap: 12px;
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 12px;
+            min-width: 200px;
+        }
+        .feedback-radio {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+            width: 100%;
+        }
+        .feedback-radio:hover {
+            background: rgba(25, 118, 210, 0.1);
+        }
+        .feedback-radio input[type="radio"] {
+            accent-color: #1976d2;
+            width: 18px;
+            height: 18px;
+        }
+        .feedback-radio.correct {
+            background: rgba(76, 175, 80, 0.1);
+            border: 2px solid #4caf50;
+        }
+        .feedback-radio.incorrect {
+            background: rgba(244, 67, 54, 0.1);
+            border: 2px solid #f44336;
+        }
+        .feedback-radio.dont-know {
+            background: rgba(255, 152, 0, 0.1);
+            border: 2px solid #ff9800;
+        }
+        .feedback-radio.skip {
+            background: rgba(156, 39, 176, 0.1);
+            border: 2px solid #9c27b0;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+            justify-content: center;
+        }
+        .action-buttons button {
+            width: auto;
+            padding: 12px 24px;
+        }
+        #evaluateBtn {
+            background: linear-gradient(135deg, #ff9800 0%, #f57c00 100%);
+        }
+        #evaluateBtn:hover {
+            background: linear-gradient(135deg, #f57c00 0%, #ef6c00 100%);
+        }
+        #continueBtn {
+            background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+            display: none;
+        }
+        #continueBtn:hover {
+            background: linear-gradient(135deg, #7b1fa2 0%, #6a1b9a 100%);
+        }
+        .content-box {
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease;
+        }
+        .content-box:hover {
+            transform: translateY(-2px);
+        }
+        .explanation-box {
+            background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+            width: 50%;
+        }
+        .example-box {
+            background: linear-gradient(135deg, #d1ecf1 0%, #a8e6cf 100%);
+            width: 25%;
+        }
+        .exercise-box {
+            background: linear-gradient(135deg, #e2d9f3 0%, #d4a5f3 100%);
+            width: 25%;
+        }
+        .content-box h4 {
+            margin: 0 0 12px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #333;
+        }
+        .content-box p {
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #555;
+        }
+        #submitFeedback { 
+            margin-top: 32px; 
+            display: none; 
+            background: linear-gradient(135deg, #4caf50 0%, #45a049 100%);
+        }
+        #submitFeedback:hover {
+            background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+        }
+        #feedbackMsg { 
+            margin-top: 20px; 
+            text-align: center; 
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 8px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px auto;
+                padding: 20px 16px;
+            }
+            .idea-card {
+                width: 100%;
+                padding: 16px;
+            }
+            .idea-content-row {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .feedback-radio-group {
+                margin-right: 0;
+                margin-bottom: 16px;
+                width: 100%;
+                flex-direction: row;
+                justify-content: center;
+            }
+            .explanation-box, .example-box, .exercise-box {
+                width: 100%;
+            }
+            h2 {
+                font-size: 1.8rem;
+            }
+        }
+        /* CSS: عدل feedback-radio-group ليكون صف أفقي */
+        .feedback-radio-group.horizontal {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            background: none;
+            padding: 18px 0 0 0;
+            margin: 0 auto;
+            min-width: unset;
+            width: 100%;
+        }
+        .feedback-radio-group.horizontal .feedback-radio {
+            width: auto;
+            min-width: 120px;
+            justify-content: center;
+        }
+        @media (max-width: 768px) {
+            .feedback-radio-group.horizontal {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <img src="logo.png" alt="Knowledge Builder Logo" style="max-width: 150px; height: auto; margin-bottom: 15px;">
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 30px; width: 100%;">
+            <form id="lessonForm" style="max-width: 500px; width: 100%; background: #fff; padding: 40px; border-radius: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); margin: 0 auto;">
+                <label for="grade" style="font-size: 1.3rem; font-weight: 600; color: #1976d2; margin-bottom: 12px;">📚 Grade Level</label>
+                <select id="grade" name="grade" required style="font-size: 1.1rem; padding: 16px 20px;">
+                    <option value="">Select your grade</option>
+                    <option value="1">Grade 1</option>
+                    <option value="2">Grade 2</option>
+                    <option value="3">Grade 3</option>
+                    <option value="4">Grade 4</option>
+                    <option value="5">Grade 5</option>
+                    <option value="6">Grade 6</option>
+                    <option value="7">Grade 7</option>
+                    <option value="8">Grade 8</option>
+                    <option value="9">Grade 9</option>
+                    <option value="10">Grade 10</option>
+                    <option value="11">Grade 11</option>
+                    <option value="12">Grade 12</option>
+                    <option value="universal">Universal Level</option>
+                    <option value="higher">Higher Level</option>
+                </select>
+                <label for="lesson" style="font-size: 1.3rem; font-weight: 600; color: #1976d2; margin-bottom: 12px; margin-top: 25px;">📖 Lesson or Concept</label>
+                <input type="text" id="lesson" name="lesson" placeholder="e.g. Ohm's Law, Photosynthesis, Algebra..." required style="font-size: 1.1rem; padding: 16px 20px;">
+                <button type="submit" style="font-size: 1.2rem; font-weight: 600; padding: 18px 30px; margin-top: 25px;">🚀 Start Learning</button>
+            </form>
+        </div>
+        <div id="ideas" class="ideas-list"></div>
+        <div id="feedbackMsg"></div>
+        <div id="postSessionActions"></div>
+    </div>
+    <script>
+        let currentIdeas = [];
+        let feedback = [];
+        let currentLevel = 0; // 0: main topics, 1+: subtopics
+        let subtopicPath = []; // Track the path for recursive feedback
+        let lesson = '';
+        let grade = '';
+
+        document.getElementById('lessonForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            grade = document.getElementById('grade').value;
+            lesson = document.getElementById('lesson').value;
+            currentLevel = 0;
+            subtopicPath = [];
+            await loadIdeas();
+        });
+
+        async function loadIdeas() {
+            const ideasDiv = document.getElementById('ideas');
+            const submitBtn = document.getElementById('submitFeedback');
+            const feedbackMsg = document.getElementById('feedbackMsg');
+            ideasDiv.innerHTML = '<p style="text-align:center;font-size:1.2rem;color:#1976d2;">🔄 Loading ideas...</p>';
+            feedbackMsg.textContent = '';
+            try {
+                const res = await fetch('http://localhost:8000/api/lesson', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ grade, lesson })
+                });
+                if (!res.ok) throw new Error('Failed to fetch ideas');
+                const result = await res.json();
+                if (!result.topics || !Array.isArray(result.topics) || result.topics.length === 0) {
+                    ideasDiv.innerHTML = '<p style="text-align:center;color:#f44336;">❌ No ideas found.</p>';
+                    return;
+                }
+                currentIdeas = result.topics;
+                feedback = Array(currentIdeas.length).fill(null);
+                renderIntroductionAndIdeas(result.introduction, currentIdeas);
+            } catch (err) {
+                ideasDiv.innerHTML = `<p style="text-align:center;color:#f44336;">❌ Error: ${err.message}</p>`;
+            }
+        }
+
+        function renderIntroductionAndIdeas(introduction, ideas) {
+            const ideasDiv = document.getElementById('ideas');
+            
+            ideasDiv.innerHTML = `
+                <div class="idea-card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 2px solid #1976d2; text-align: center;">
+                    <div style="margin-bottom: 20px;">
+                        <img src="logo.png" alt="Knowledge Builder Logo" style="max-width: 200px; height: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    </div>
+                    <div class="idea-header">
+                        <h3 style="color: #1565c0;">📚 Lesson Introduction</h3>
+                    </div>
+                    <div style="padding: 16px; font-size: 1rem; line-height: 2.1; color: #333; text-align: left; white-space: pre-line;">
+                        ${introduction}
+                    </div>
+                </div>
+                ${ideas.map((idea, idx) => `
+                    <div class="idea-card" id="idea-card-${idx}">
+                        <div class="idea-header">
+                            <h3>💡 Idea ${idx + 1}: ${idea.concept}</h3>
+                        </div>
+                        <div class="idea-content-row">
+                            <div class="content-box explanation-box" style="font-size: 1.7rem;">
+                                <h4>📘 Explanation</h4>
+                                <p>${idea.explanation}</p>
+                            </div>
+                            <div class="content-box example-box" style="font-size: 1.7rem;">
+                                <h4>🔍 Example</h4>
+                                <p>${idea.example}</p>
+                            </div>
+                            <div class="content-box exercise-box" style="font-size: 1.7rem;">
+                                <h4>✏️ Exercise</h4>
+                                <p>${idea.question}</p>
+                            </div>
+                        </div>
+                        <div class="feedback-radio-group horizontal">
+                            <label class="feedback-radio">
+                                <input type="radio" name="feedback-${idx}" value="option1" onchange="setFeedback(${idx}, 'option1', this)">
+                                <span>${idea.options && idea.options[0] ? idea.options[0] : 'No option'}</span>
+                            </label>
+                            <label class="feedback-radio">
+                                <input type="radio" name="feedback-${idx}" value="option2" onchange="setFeedback(${idx}, 'option2', this)">
+                                <span>${idea.options && idea.options[1] ? idea.options[1] : 'No option'}</span>
+                            </label>
+                            <label class="feedback-radio">
+                                <input type="radio" name="feedback-${idx}" value="option3" onchange="setFeedback(${idx}, 'option3', this)">
+                                <span>${idea.options && idea.options[2] ? idea.options[2] : 'No option'}</span>
+                            </label>
+                            <label class="feedback-radio">
+                                <input type="radio" name="feedback-${idx}" value="dont-know" onchange="setFeedback(${idx}, 'dont-know', this)">
+                                <span>I don't know</span>
+                            </label>
+                            <label class="feedback-radio">
+                                <input type="radio" name="feedback-${idx}" value="skip" onchange="setFeedback(${idx}, 'skip', this)">
+                                <span>Skip</span>
+                            </label>
+                        </div>
+                    </div>
+                `).join('')}
+                <div class="action-buttons">
+                    <button id="evaluateBtn">🔍 تقييم</button>
+                    <button id="continueBtn" style="display:none">🔁 اكمال</button>
+                    <button id="stopBtn" style="display:none">⏹️ توقف</button>
+                </div>
+            `;
+            setupActionButtons();
+        }
+
+        function renderIdeas(ideas) {
+            const ideasDiv = document.getElementById('ideas');
+            // Check for Gemini error in subtopics
+            if (ideas.length === 1 && ideas[0].concept === 'Error') {
+                ideasDiv.innerHTML = `
+                    <div class="idea-card">
+                        <h3 style="color:#f44336;">❌ Error Generating Subtopics</h3>
+                        <p><strong>Explanation:</strong> ${ideas[0].explanation}</p>
+                        <div style="display:flex;gap:12px;margin-top:16px;">
+                            <button onclick="window.location.reload()" style="width:auto;padding:10px 20px;">🔄 Back to Start</button>
+                            <button id="retryBtn" style="width:auto;padding:10px 20px;">🔄 Retry</button>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            ideasDiv.innerHTML = `
+                <div class="idea-card" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); border: 2px solid #1976d2; text-align: center;">
+                    <div style="margin-bottom: 20px;">
+                        <img src="logo.png" alt="Knowledge Builder Logo" style="max-width: 200px; height: auto; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    </div>
+                    <div class="idea-header">
+                        <h3 style="color: #1565c0;">📚 Subtopics Session</h3>
+                    </div>
+                    <div style="padding: 16px; font-size: 1.1rem; line-height: 1.6; color: #333;">
+                        Let's dive deeper into the concepts you need more help with.
+                    </div>
+                </div>
+            ` + ideas.map((idea, idx) => `
+                <div class="idea-card" id="idea-card-${idx}">
+                    <div class="idea-header">
+                        <h3>💡 Idea ${idx + 1}: ${idea.concept}</h3>
+                    </div>
+                    <div class="idea-content-row">
+                        <div class="content-box explanation-box">
+                            <h4>📘 Explanation</h4>
+                            <p>${idea.explanation}</p>
+                        </div>
+                        <div class="content-box example-box">
+                            <h4>🔍 Example</h4>
+                            <p>${idea.example}</p>
+                        </div>
+                        <div class="content-box exercise-box">
+                            <h4>✏️ Exercise</h4>
+                            <p>${idea.question}</p>
+                        </div>
+                    </div>
+                    <div class="feedback-radio-group horizontal">
+                        <label class="feedback-radio">
+                            <input type="radio" name="feedback-${idx}" value="option1" onchange="setFeedback(${idx}, 'option1', this)">
+                            <span>${idea.options && idea.options[0] ? idea.options[0] : 'No option'}</span>
+                        </label>
+                        <label class="feedback-radio">
+                            <input type="radio" name="feedback-${idx}" value="option2" onchange="setFeedback(${idx}, 'option2', this)">
+                            <span>${idea.options && idea.options[1] ? idea.options[1] : 'No option'}</span>
+                        </label>
+                        <label class="feedback-radio">
+                            <input type="radio" name="feedback-${idx}" value="option3" onchange="setFeedback(${idx}, 'option3', this)">
+                            <span>${idea.options && idea.options[2] ? idea.options[2] : 'No option'}</span>
+                        </label>
+                        <label class="feedback-radio">
+                            <input type="radio" name="feedback-${idx}" value="dont-know" onchange="setFeedback(${idx}, 'dont-know', this)">
+                            <span>I don't know</span>
+                        </label>
+                        <label class="feedback-radio">
+                            <input type="radio" name="feedback-${idx}" value="skip" onchange="setFeedback(${idx}, 'skip', this)">
+                            <span>Skip</span>
+                        </label>
+                    </div>
+                </div>
+            `).join('') + `
+                <div class="action-buttons">
+                    <button id="evaluateBtn">🔍 تقييم</button>
+                    <button id="continueBtn" style="display:none">🔁 اكمال</button>
+                    <button id="stopBtn" style="display:none">⏹️ توقف</button>
+                </div>
+            `;
+            setupActionButtons();
+        }
+
+        window.setFeedback = function(idx, value, btn) {
+            feedback[idx] = value;
+            const card = document.getElementById(`idea-card-${idx}`);
+            const radioGroup = card.querySelector('.feedback-radio-group');
+            
+            // Clear all radio selections
+            radioGroup.querySelectorAll('input[type="radio"]').forEach(r => {
+                r.checked = false;
+            });
+            
+            // Check the selected radio
+            const selectedRadio = radioGroup.querySelector(`input[value="${value}"]`);
+            if (selectedRadio) {
+                selectedRadio.checked = true;
+            }
+            
+            // Color the main idea card immediately for "dont-know" and "skip"
+            if (value === 'dont-know' || value === 'skip') {
+                // Remove any existing color classes
+                card.classList.remove('understood', 'not-understood');
+                
+                if (value === 'dont-know') {
+                    card.classList.add('not-understood');
+                } else if (value === 'skip') {
+                    card.classList.add('understood');
+                }
+            } else {
+                // For regular options, remove color classes (will be colored after evaluation)
+                card.classList.remove('understood', 'not-understood');
+            }
+        };
+
+        function renderPostSessionButtons() {
+            const container = document.getElementById('postSessionActions');
+            container.innerHTML = `
+                <button id="fullExplainBtn" style="margin: 10px; padding: 14px 24px; background: #1976d2; color: #fff; border-radius: 12px; font-size: 1.1rem;">Full Explain</button>
+                <button id="fullQuizBtn" style="margin: 10px; padding: 14px 24px; background: #43a047; color: #fff; border-radius: 12px; font-size: 1.1rem;">Full Arranged Quiz</button>
+            `;
+            document.getElementById('fullExplainBtn').onclick = handleFullExplain;
+            document.getElementById('fullQuizBtn').onclick = handleFullArrangedQuiz;
+        }
+
+        function setupActionButtons() {
+            const evalBtn = document.getElementById('evaluateBtn');
+            const contBtn = document.getElementById('continueBtn');
+            const stopBtn = document.getElementById('stopBtn');
+            if (evalBtn) evalBtn.style.display = 'inline-block';
+            if (contBtn) contBtn.style.display = 'none';
+            if (stopBtn) stopBtn.style.display = 'none';
+            if (evalBtn) evalBtn.onclick = evaluateAnswers;
+            if (contBtn) contBtn.onclick = continueToSubtopics;
+            if (stopBtn) stopBtn.onclick = function() {
+                if (contBtn) contBtn.style.display = 'none';
+                if (stopBtn) stopBtn.style.display = 'none';
+                document.getElementById('ideas').innerHTML = '';
+                const feedbackMsg = document.getElementById('feedbackMsg');
+                feedbackMsg.textContent = '✅ تم حفظ التقدم وإنهاء الجلسة.';
+                feedbackMsg.style.color = '#4caf50';
+                feedbackMsg.style.background = '#e8f5e8';
+                renderPostSessionButtons(); // Show post-session buttons
+            };
+        }
+
+        function evaluateAnswers() {
+            // Evaluate answers using correct_answer from backend
+            currentIdeas.forEach((idea, idx) => {
+                const card = document.getElementById(`idea-card-${idx}`);
+                const radioGroup = card.querySelector('.feedback-radio-group');
+                const radios = radioGroup.querySelectorAll('.feedback-radio');
+                
+                // Remove existing color classes from the main card
+                card.classList.remove('understood', 'not-understood');
+                
+                // Get the selected feedback for this idea
+                const selectedFeedback = feedback[idx];
+                
+                radios.forEach(radio => {
+                    radio.classList.remove('correct', 'incorrect', 'dont-know', 'skip');
+                    const value = radio.querySelector('input').value;
+                    
+                    // Only color the radio that was actually selected
+                    if (selectedFeedback === value) {
+                        if (value === 'dont-know') {
+                            radio.classList.add('dont-know');
+                            // Don't add any color to the main card for dont-know during evaluation
+                        } else if (value === 'skip') {
+                            radio.classList.add('skip');
+                            // Don't add any color to the main card for skip during evaluation
+                        } else {
+                            // For regular options, check correctness
+                            const correctOption = idea.correct_answer.toLowerCase();
+                            const selectedOption = value.replace('option', ''); // option1 -> 1
+                            
+                            if (selectedOption === correctOption) {
+                                radio.classList.add('correct');
+                                // Color the main card as understood
+                                card.classList.add('understood');
+                            } else {
+                                radio.classList.add('incorrect');
+                                // Color the main card as not understood
+                                card.classList.add('not-understood');
+                            }
+                        }
+                    }
+                });
+            });
+            
+            const evalBtn2 = document.getElementById('evaluateBtn');
+            const contBtn2 = document.getElementById('continueBtn');
+            const stopBtn2 = document.getElementById('stopBtn');
+            if (evalBtn2) evalBtn2.style.display = 'none';
+            if (contBtn2) contBtn2.style.display = 'inline-block';
+            if (stopBtn2) stopBtn2.style.display = 'inline-block';
+        }
+
+        function continueToSubtopics() {
+            // Convert feedback to understood/not understood format for backend
+            const convertedFeedback = feedback.map((f, idx) => {
+                if (f === 'skip') return 'understood';
+                if (f === 'dont-know') return 'not understood';
+                // For actual answers, determine based on correctness
+                const idea = currentIdeas[idx];
+                const correctOption = idea.correct_answer.toLowerCase();
+                const selectedOption = f.replace('option', '');
+                
+                if (selectedOption === correctOption) {
+                    return 'understood';
+                } else {
+                    return 'not understood';
+                }
+            });
+            
+            // Prepare data for backend
+            const feedbackData = currentIdeas.map((idea, idx) => ({
+                ...idea,
+                feedback: convertedFeedback[idx]
+            }));
+            
+            // Send to backend and handle response
+            submitFeedbackToBackend(feedbackData);
+        }
+
+        async function submitFeedbackToBackend(feedbackData) {
+            const feedbackMsg = document.getElementById('feedbackMsg');
+            try {
+                const res = await fetch('http://localhost:8000/api/feedback', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ grade, lesson, feedback: feedbackData, subtopicPath })
+                });
+                if (!res.ok) throw new Error('Failed to submit feedback');
+                const result = await res.json();
+                
+                if (!result.subtopics || result.subtopics.length === 0) {
+                    const contBtn3 = document.getElementById('continueBtn');
+                    const stopBtn3 = document.getElementById('stopBtn');
+                    if (contBtn3) contBtn3.style.display = 'none';
+                    if (stopBtn3) stopBtn3.style.display = 'none';
+                    feedbackMsg.textContent = '✅ تم إنهاء الجلسة بنجاح!';
+                    feedbackMsg.style.color = '#4caf50';
+                    feedbackMsg.style.background = '#e8f5e8';
+                    document.getElementById('ideas').innerHTML = '';
+                    renderPostSessionButtons(); // Show post-session buttons
+                    return;
+                }
+
+                currentIdeas = result.subtopics;
+                feedback = Array(currentIdeas.length).fill(null);
+                subtopicPath = result.subtopicPath || [];
+                renderIdeas(currentIdeas);
+                feedbackMsg.textContent = '📚 Now, review the subtopics.';
+                feedbackMsg.style.color = '#1976d2';
+                feedbackMsg.style.background = '#e3f2fd';
+                setupActionButtons(); // Re-setup buttons after new subtopics are rendered
+            } catch (err) {
+                feedbackMsg.textContent = '❌ Error: ' + err.message;
+                feedbackMsg.style.color = '#f44336';
+                feedbackMsg.style.background = '#ffebee';
+            }
+        }
+
+        // Add placeholder handlers for the new buttons
+        async function handleFullExplain() {
+            const btn = document.getElementById('fullExplainBtn');
+            btn.disabled = true;
+            btn.style.opacity = 0.6;
+            const ideasDiv = document.getElementById('ideas');
+            ideasDiv.innerHTML = '<p style="text-align:center;font-size:1.2rem;color:#1976d2;">🔄 Loading explanations...</p>';
+            try {
+                const res = await fetch('http://localhost:8000/api/full_explain');
+                const data = await res.json();
+                if (!data.misunderstood || data.misunderstood.length === 0) {
+                    ideasDiv.innerHTML = '<p style="text-align:center;color:#4caf50;">🎉 All topics understood!</p>';
+                    return;
+                }
+                // Group by parent for hierarchy
+                let grouped = {};
+                data.misunderstood.forEach(item => {
+                    const parent = item.parent || 'Main';
+                    if (!grouped[parent]) grouped[parent] = [];
+                    grouped[parent].push(item);
+                });
+                let html = '';
+                Object.keys(grouped).forEach(parent => {
+                    html += `<div style="margin-bottom:24px;">
+                <div style="font-weight:bold;font-size:1.1rem;color:#1565c0;margin-bottom:8px;">${parent !== 'Main' ? 'Related to: ' + parent : 'Main Topics'}</div>`;
+                    grouped[parent].forEach(item => {
+                        html += `<div style="background:#f5f5f5;border-radius:16px;padding:20px 24px;margin-bottom:12px;box-shadow:0 2px 8px #1976d220;">
+                    <div style="font-size:1.15rem;font-weight:600;color:#1976d2;">${item.concept}</div>
+                    <div style="margin:8px 0 0 0;"><b>Explanation:</b> ${item.explanation}</div>
+                    <div style="margin:8px 0 0 0;"><b>Example:</b> ${item.example}</div>
+                    <div style="margin:8px 0 0 0;"><b>Question:</b> ${item.question}</div>
+                </div>`;
+                    });
+                    html += `</div>`;
+                });
+                ideasDiv.innerHTML = html;
+            } catch (err) {
+                ideasDiv.innerHTML = `<p style="color:#f44336;">❌ Error: ${err.message}</p>`;
+            }
+        }
+
+        async function handleFullArrangedQuiz() {
+            const btn = document.getElementById('fullQuizBtn');
+            btn.disabled = true;
+            btn.style.opacity = 0.6;
+            const ideasDiv = document.getElementById('ideas');
+            ideasDiv.innerHTML = '<p style="text-align:center;font-size:1.2rem;color:#1976d2;">🔄 Loading quiz...</p>';
+            try {
+                const res = await fetch('http://localhost:8000/api/full_arranged_quiz');
+                const data = await res.json();
+                if (!data.quiz || data.quiz.length === 0) {
+                    ideasDiv.innerHTML = '<p style="text-align:center;color:#4caf50;">🎉 No misunderstood topics for quiz!</p>';
+                    return;
+                }
+                let html = '<form id="arrangedQuizForm">';
+                data.quiz.forEach((item, idx) => {
+                    html += `<div class="idea-card" style="margin-bottom:18px;">
+                <div class="idea-header"><h3 style="color:#1976d2;">${item.concept}</h3></div>
+                <div class="content-box exercise-box" style="width:100%;margin-bottom:12px;">
+                    <b>Question:</b> ${item.question}
+                </div>
+                <div class="feedback-radio-group horizontal" style="margin-bottom:8px;">
+                    ${item.options.map((opt, i) => `
+                        <label class="feedback-radio">
+                            <input type="radio" name="quiz-${idx}" value="option${i+1}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </div>`;
+                });
+                html += `<div class="action-buttons"><button type="button" id="evaluateQuizBtn" style="background:#ff9800;">Evaluate</button></div></form>`;
+                ideasDiv.innerHTML = html;
+                document.getElementById('evaluateQuizBtn').onclick = () => evaluateArrangedQuiz(data.quiz);
+            } catch (err) {
+                ideasDiv.innerHTML = `<p style="color:#f44336;">❌ Error: ${err.message}</p>`;
+            }
+        }
+
+        function evaluateArrangedQuiz(quizItems) {
+            const form = document.getElementById('arrangedQuizForm');
+            let incorrect = [];
+            quizItems.forEach((item, idx) => {
+                const radios = form.querySelectorAll(`input[name='quiz-${idx}']`);
+                let selected = null;
+                radios.forEach(radio => { if (radio.checked) selected = radio.value; });
+                const correct = 'option' + item.correct_answer.toLowerCase();
+                const parent = radios[0].closest('.idea-card');
+                radios.forEach(radio => {
+                    radio.parentElement.classList.remove('correct', 'incorrect');
+                    if (radio.checked) {
+                        if (radio.value === correct) {
+                            radio.parentElement.classList.add('correct');
+                            parent.style.background = 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)';
+                        } else {
+                            radio.parentElement.classList.add('incorrect');
+                            parent.style.background = 'linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%)';
+                            incorrect.push({ id: item.id, concept: item.concept });
+                        }
+                    }
+                });
+            });
+            // Save incorrect to backend (false-Q.json)
+            fetch('http://localhost:8000/save-false-q', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ incorrect })
+            });
+            // Show next buttons
+            const ideasDiv = document.getElementById('ideas');
+            const postSession = document.getElementById('postSessionActions');
+            postSession.innerHTML = `
+                <button id="verySimpleExplainBtn" style="margin: 10px; padding: 14px 24px; background: #ff9800; color: #fff; border-radius: 12px; font-size: 1.1rem;">Very Simple Explain</button>
+                <button id="stopBtnFinal" style="margin: 10px; padding: 14px 24px; background: #b71c1c; color: #fff; border-radius: 12px; font-size: 1.1rem;">New Session</button>
+            `;
+            document.getElementById('verySimpleExplainBtn').onclick = handleVerySimpleExplain;
+            document.getElementById('stopBtnFinal').onclick = () => window.location.reload();
+        }
+
+        async function handleVerySimpleExplain() {
+            const ideasDiv = document.getElementById('ideas');
+            ideasDiv.innerHTML = '<p style="text-align:center;font-size:1.2rem;color:#1976d2;">🔄 Generating very simple explanations...</p>';
+            try {
+                const res = await fetch('http://localhost:8000/api/very_simple_explain', { method: 'POST' });
+                const data = await res.json();
+                if (!data.very_simple_explanations || data.very_simple_explanations.length === 0) {
+                    ideasDiv.innerHTML = '<p style="text-align:center;color:#4caf50;">🎉 No topics to explain further!</p>';
+                    return;
+                }
+                let html = '';
+                data.very_simple_explanations.forEach(item => {
+                    html += `<div style="background:#fffde7;border-radius:16px;padding:20px 24px;margin-bottom:12px;box-shadow:0 2px 8px #ff980020;">
+                <div style="font-size:1.15rem;font-weight:600;color:#ff9800;">${item.concept}</div>
+                <div style="margin:8px 0 0 0;"><b>Very Simple Explanation:</b> ${item.simple_explanation}</div>
+            </div>`;
+                });
+                ideasDiv.innerHTML = html;
+                // Only show new session button
+                const postSession = document.getElementById('postSessionActions');
+                postSession.innerHTML = `<button id="newSessionBtn" style="margin: 10px; padding: 14px 24px; background: #1976d2; color: #fff; border-radius: 12px; font-size: 1.1rem;">New Session</button>`;
+                document.getElementById('newSessionBtn').onclick = () => window.location.reload();
+            } catch (err) {
+                ideasDiv.innerHTML = `<p style="color:#f44336;">❌ Error: ${err.message}</p>`;
+            }
+        }
+    </script>
+</body>
+</html>
